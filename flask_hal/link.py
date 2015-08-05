@@ -93,6 +93,22 @@ class Links(object):
 
         return self.__next__()
 
+    def append(self, link):
+        """Appends a ``Link`` object to the ``Links``.
+
+        Args:
+            link (flask_hal.link.Link): The ``Link`` object to add
+
+        Raises:
+            TypeError: If the ``link`` argument is not a ``flask_hal.link.Link``
+        """
+
+        if not isinstance(link, Link):
+            raise TypeError(
+                '{0} is not a valid flask_hal.link.Link instance'.format(link))
+
+        self.links.append(link)
+
 
 class Link(object):
     """Build ``HAL`` specification ``_links`` object.
