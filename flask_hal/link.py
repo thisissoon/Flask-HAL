@@ -44,7 +44,23 @@ class Links(object):
         ... }
     """
 
-    pass
+    def __init__(self, *args):
+        """Initialise a new ``Links`` object.
+
+        Example:
+            >>> l = Links(
+            ...     Link('foo', 'http://foo.com'),
+            ...     Link('bar', 'http://bar.com'))
+
+        Note:
+            Links that are not instances of ``Link`` will be ignored.
+        """
+
+        self.links = []
+
+        for link in args:
+            if isinstance(link, Link):
+                self.links.append = link
 
 
 class Link(object):
