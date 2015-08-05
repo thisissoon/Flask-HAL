@@ -66,6 +66,12 @@ class Links(object):
 
             self.links.append(link)
 
+    def __getitem__(self, index):
+        """Get a specific link by index.
+        """
+
+        return self.links[index]
+
     def __iter__(self):
         """Makes the ``Links`` object iterable.
         """
