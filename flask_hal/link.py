@@ -23,6 +23,30 @@ VALID_LINK_ATTRS = [
 ]
 
 
+class Links(object):
+    """Build a collection of ``HAL`` link objects.
+
+    Example:
+        >>> from flask_hal.link import Link, Links
+        >>> l = Links(
+        ...     Link('foo', 'http://foo.com'),
+        ...     Link('bar', 'http://bar.com'))
+        >>> print l.to_json()
+        ... {
+        ...     "_links": {
+        ...         "foo": {
+        ...             "href": "http://foo.com"
+        ...         },
+        ...         "bar": {
+        ...             "href": "http://bar.com"
+        ...         }
+        ...     }
+        ... }
+    """
+
+    pass
+
+
 class Link(object):
     """Build ``HAL`` specification ``_links`` object.
 
