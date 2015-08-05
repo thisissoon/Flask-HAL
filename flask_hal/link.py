@@ -57,10 +57,41 @@ class Links(object):
         """
 
         self.links = []
+        self.index = 0
 
         for link in args:
             if isinstance(link, Link):
-                self.links.append = link
+                self.links.append(link)
+
+    def __iter__(self):
+        """Makes the ``Links`` object iterable.
+        """
+
+        return self
+
+    def __next__(self):
+        """Iterate to the next item.
+
+        Returns:
+            Link: The next link object
+
+        Raises:
+            StopIteration
+        """
+
+        try:
+            link = self.links[self.index]
+        except IndexError:
+            raise StopIteration
+        self.index += 1
+
+        return link
+
+    def next(self):
+        """Support for Python 2.x iterators.
+        """
+
+        return self.__next__()
 
 
 class Link(object):
