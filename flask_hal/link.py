@@ -23,32 +23,32 @@ VALID_LINK_ATTRS = [
 ]
 
 
-class Links(object):
+class Collection(object):
     """Build a collection of ``HAL`` link objects.
 
     Example:
-        >>> from flask_hal.link import Link, Links
-        >>> l = Links(
+        >>> from flask_hal.link import Collection, Link
+        >>> l = Collection(
         ...     Link('foo', 'http://foo.com'),
         ...     Link('bar', 'http://bar.com'))
-        >>> print l.to_json()
+        >>> print l.to_dict()
         ... {
-        ...     "_links": {
-        ...         "foo": {
-        ...             "href": "http://foo.com"
+        ...     '_links': {
+        ...         'foo': {
+        ...             'href": "http://foo.com'
         ...         },
-        ...         "bar": {
-        ...             "href": "http://bar.com"
+        ...         'bar': {
+        ...             'href': 'http://bar.com'
         ...         }
         ...     }
         ... }
     """
 
     def __init__(self, *args):
-        """Initialise a new ``Links`` object.
+        """Initialise a new ``Collection`` object.
 
         Example:
-            >>> l = Links(
+            >>> l = Collection(
             ...     Link('foo', 'http://foo.com'),
             ...     Link('bar', 'http://bar.com'))
 
@@ -73,7 +73,7 @@ class Links(object):
         return self.links[index]
 
     def __iter__(self):
-        """Makes the ``Links`` object iterable.
+        """Makes the ``Collection`` object iterable.
         """
 
         return self
@@ -109,7 +109,7 @@ class Links(object):
         return self.__next__()
 
     def append(self, link):
-        """Appends a ``Link`` object to the ``Links``.
+        """Appends a ``Link`` object to the ``Collection``.
 
         Args:
             link (flask_hal.link.Link): The ``Link`` object to add
@@ -125,11 +125,12 @@ class Links(object):
         self.links.append(link)
 
     def to_dict(self):
-        """Returns the Python ``dict`` representation of the ``Links`` instance.
+        """Returns the Python ``dict`` representation of the ``Collection``
+        instance.
 
         Example:
-            >>> from flask_hal.link import Link, Links
-            >>> l = Links(
+            >>> from flask_hal.link import Collection, Link
+            >>> l = Collection(
             ...     Link('foo', 'http://foo.com'),
             ...     Link('bar', 'http://bar.com'))
             >>> l.to_dict()
@@ -153,8 +154,8 @@ class Links(object):
         """Returns the ``JSON`` representation of the instance.
 
         Example:
-            >>> from flask_hal.link import Link, Links
-            >>> l = Links(
+            >>> from flask_hal.link import Collection, Link
+            >>> l = Collection(
             ...     Link('foo', 'http://foo.com'),
             ...     Link('bar', 'http://bar.com'))
             >>> l.to_json()
