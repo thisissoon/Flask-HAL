@@ -78,6 +78,12 @@ class Links(object):
 
         return self
 
+    def __len__(self):
+        """Returns the number of links.
+        """
+
+        return len(self.links)
+
     def __next__(self):
         """Iterate to the next item.
 
