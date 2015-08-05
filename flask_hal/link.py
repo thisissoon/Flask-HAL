@@ -163,6 +163,33 @@ class Link(object):
             if attr in kwargs:
                 setattr(self, attr, kwargs.pop(attr))
 
+    def to_dict(self):
+        """Returns the Python ``dict`` representation of the ``Link`` instance.
+
+        Example:
+            >>> from flask_hal.link import Link
+            >>> l = Link('foo', 'http://foo.com')
+            >>> l.to_dict()
+            ... {'foo': {'href': 'http://foo.com'}}
+
+        Returns:
+            dict
+        """
+
+        # Minimum viable link
+        link = {
+            'href': self.href
+        }
+
+        # Add extra attributes if they exist
+        for attr in VALID_LINK_ATTRS:
+            if hasattr(self, attr):
+                link[attr] = getattr(self, attr)
+
+        return {
+            self.rel: link
+        }
+
     def to_json(self):
         """Returns the ``JSON`` encoded representation of the ``Link`` object.
 
@@ -176,14 +203,4 @@ class Link(object):
             str: The ``JSON`` encoded object
         """
 
-        # Minimum viable link
-        link = {
-            'href': self.href
-        }
-
-        # Add extra attributes if they exist
-        for attr in VALID_LINK_ATTRS:
-            if hasattr(self, attr):
-                link[attr] = getattr(self, attr)
-
-        return json.dumps({self.rel: link})
+        return json.dumps(self.to_dict())
