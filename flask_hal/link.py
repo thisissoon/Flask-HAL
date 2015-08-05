@@ -124,6 +124,48 @@ class Links(object):
 
         self.links.append(link)
 
+    def to_dict(self):
+        """Returns the Python ``dict`` representation of the ``Links`` instance.
+
+        Example:
+            >>> from flask_hal.link import Link, Links
+            >>> l = Links(
+            ...     Link('foo', 'http://foo.com'),
+            ...     Link('bar', 'http://bar.com'))
+            >>> l.to_dict()
+            ... {'_links': {'bar': {'href': 'http://bar.com'},
+            ... 'foo': {'href': 'http://foo.com'}}}
+
+        Returns:
+            dict
+        """
+
+        links = {}
+
+        for link in self.links:
+            links.update(link.to_dict())
+
+        return {
+            '_links': links
+        }
+
+    def to_json(self):
+        """Returns the ``JSON`` representation of the instance.
+
+        Example:
+            >>> from flask_hal.link import Link, Links
+            >>> l = Links(
+            ...     Link('foo', 'http://foo.com'),
+            ...     Link('bar', 'http://bar.com'))
+            >>> l.to_json()
+            ... '{"_links": {"foo": {"href": "http://foo.com"}, "bar": {"href": "http://bar.com"}}}'
+
+        Returns:
+            str: The ``JSON`` representation of the instance
+        """
+
+        return json.dumps(self.to_dict())
+
 
 class Link(object):
     """Build ``HAL`` specification ``_links`` object.
