@@ -166,6 +166,12 @@ class Link(object):
     def to_json(self):
         """Returns the ``JSON`` encoded representation of the ``Link`` object.
 
+        Example:
+            >>> from flask_hal.link import Link
+            >>> l = Link('foo', 'http://foo.com', name='Foo')
+            >>> print l.to_json()
+            ... '{"foo": {"href": "http://foo.com", "name": "Foo"}}'
+
         Returns:
             str: The ``JSON`` encoded object
         """
