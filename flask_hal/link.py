@@ -52,16 +52,19 @@ class Links(object):
             ...     Link('foo', 'http://foo.com'),
             ...     Link('bar', 'http://bar.com'))
 
-        Note:
-            Links that are not instances of ``Link`` will be ignored.
+        Raises:
+            TypeError: If a link is not a ``flask_hal.link.Link`` instance
         """
 
         self.links = []
         self.index = 0
 
         for link in args:
-            if isinstance(link, Link):
-                self.links.append(link)
+            if not isinstance(link, Link):
+                raise TypeError(
+                    '{0} is not a valid flask_hal.link.Link instance'.format(link))
+
+            self.links.append(link)
 
     def __iter__(self):
         """Makes the ``Links`` object iterable.
