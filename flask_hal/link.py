@@ -8,6 +8,9 @@ flask_hal.link
 Implements the ``HAL`` Link specification.
 """
 
+# Standard Libs
+import json
+
 
 VALID_LINK_ATTRS = [
     'name',
@@ -60,6 +63,19 @@ class Link(object):
 
     def to_json(self):
         """Returns the ``JSON`` encoded representation of the ``Link`` object.
+
+        Returns:
+            str: The ``JSON`` encoded object
         """
 
-        pass
+        # Minimum viable link
+        link = {
+            'href': self.href
+        }
+
+        # Add extra attributes if they exist
+        for attr in VALID_LINK_ATTRS:
+            if hasattr(self, attr):
+                link[attr] = getattr(self, attr)
+
+        return json.dumps({self.rel: link})
