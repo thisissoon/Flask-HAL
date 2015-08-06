@@ -15,13 +15,12 @@ app = Flask(__name__)
 HAL(app)  # Initialise HAL
 
 
-@app.route('/foo')
+@app.route('/hello')
 def foo():
-    d = document.Document(data={
-        'foo': 'bar'
+    return document.Document(data={
+        'message': 'Hello World'
     })
 
-    return d.to_json()
 
 if __name__ == "__main__":
     app.run()
