@@ -26,7 +26,7 @@ class Document(object):
 
     def __init__(self, data=None, links=None, embedded=None):
         """Initialises a new ``HAL`` Document instance. If no arguments are
-        proviced a minimal viable ``HAL`` Document is created.
+        provided a minimal viable ``HAL`` Document is created.
 
         Keyword Args:
             data (dict): Data for the document
@@ -40,7 +40,7 @@ class Document(object):
         self.data = data
         self.embedded = embedded  # TODO: Embedded API TBC
 
-        # No links proviced, create an empty collection
+        # No links provided, create an empty collection
         if links is None:
             links = link.Collection()
         else:
@@ -54,7 +54,7 @@ class Document(object):
 
     def to_dict(self):
         """Converts the ``Document`` instance into an appropriate data
-        strucutre for HAL formatted documents.
+        structure for HAL formatted documents.
 
         Returns:
             dict: The ``HAL`` document data structure
@@ -69,13 +69,13 @@ class Document(object):
         # Add Links
         document.update(self.links.to_dict())
 
-        # Add Embeded TODO: Embedded API TBC
+        # Add Embedded TODO: Embedded API TBC
         document.update(self.embedded)
 
         return document
 
     def to_json(self):
-        """Converts :class:`.Document` to a ``JSON`` datastrucute.
+        """Converts :class:`.Document` to a ``JSON`` data structure.
 
         Returns:
             str: ``JSON`` document
