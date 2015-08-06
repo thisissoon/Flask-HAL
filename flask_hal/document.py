@@ -13,6 +13,9 @@ Example:
     >>> d.to_dict()
 """
 
+# Standard Libs
+import json
+
 # Third Party Libs
 from flask_hal import link
 
@@ -70,3 +73,12 @@ class Document(object):
         document.update(self.embedded)
 
         return document
+
+    def to_json(self):
+        """Converts :class:`.Document` to a ``JSON`` datastrucute.
+
+        Returns:
+            str: ``JSON`` document
+        """
+
+        return json.dumps(self.to_dict())
