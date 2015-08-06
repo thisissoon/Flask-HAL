@@ -23,7 +23,7 @@ VALID_LINK_ATTRS = [
 ]
 
 
-class Collection(object):
+class Collection(list):
     """Build a collection of ``HAL`` link objects.
 
     Example:
@@ -56,73 +56,12 @@ class Collection(object):
             TypeError: If a link is not a ``flask_hal.link.Link`` instance
         """
 
-        self.links = []
-        self.index = 0
-
         for link in args:
             if not isinstance(link, Link):
                 raise TypeError(
                     '{0} is not a valid flask_hal.link.Link instance'.format(link))
 
-            self.links.append(link)
-
-    def __getitem__(self, index):
-        """Get a specific link by index.
-        """
-
-        return self.links[index]
-
-    def __iter__(self):
-        """Makes the ``Collection`` object iterable.
-        """
-
-        return self
-
-    def __len__(self):
-        """Returns the number of links.
-        """
-
-        return len(self.links)
-
-    def __next__(self):
-        """Iterate to the next item.
-
-        Returns:
-            Link: The next link object
-
-        Raises:
-            StopIteration
-        """
-
-        try:
-            link = self.links[self.index]
-        except IndexError:
-            raise StopIteration
-        self.index += 1
-
-        return link
-
-    def next(self):
-        """Support for Python 2.x iterators.
-        """
-
-        return self.__next__()
-
-    def append(self, link):
-        """Appends a ``Link`` object to the ``Collection``.
-
-        Args:
-            link (flask_hal.link.Link): The ``Link`` object to add
-
-        Raises:
-            TypeError: If the ``link`` argument is not a ``flask_hal.link.Link``
-        """
-
-        if not isinstance(link, Link):
-            raise TypeError(
-                '{0} is not a valid flask_hal.link.Link instance'.format(link))
-
-        self.links.append(link)
+            self.append(link)
 
     def to_dict(self):
         """Returns the Python ``dict`` representation of the ``Collection``
@@ -143,7 +82,7 @@ class Collection(object):
 
         links = {}
 
-        for link in self.links:
+        for link in self:
             links.update(link.to_dict())
 
         return {
