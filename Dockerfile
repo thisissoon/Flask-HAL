@@ -16,6 +16,6 @@ WORKDIR /app/
 
 ADD ./src /app/
 
-RUN pip install -e .[develop]
+RUN pip install tox
 
 CMD ["python"]
