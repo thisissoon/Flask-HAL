@@ -11,6 +11,12 @@ you to build ``REST`` API responses which fulfil this specification.
 Read more at the `Official Draft <https://tools.ietf.org/html/draft-kelly-json-hal-07>`_
 """
 
+# Third Party Libs
+from flask import Response
+
+# First Party Libs
+from flask_hal.document import Document
+
 
 class HAL(object):
     """Enables Flask-HAL integration into Flask Applications, either by the
@@ -57,4 +63,43 @@ class HAL(object):
             response_class (class): Optional custom ``response_class``
         """
 
-        pass
+        # Set the response class
+        if response_class is None:
+            app.response_class = HALResponse
+        else:
+            app.response_class = response_class
+
+
+class HALResponse(Response):
+    """A custom response class which overrides the default Response class
+    wrapper.
+
+    Example:
+        >>> from flask import Flask()
+        >>> from flask_hal import HALResponse
+        >>> app = Flask(__name__)
+        >>> app.response_class = HALResponse
+    """
+
+    @staticmethod
+    def force_type(rv, env):
+        """Called by ``flask.make_response`` when a view returns a none byte,
+        string or unicode value. This method takes the views return value
+        and converts into a standard `Response`.
+
+        Args:
+            rv (flask_hal.document.Document): View return value
+            env (dict): Request environment
+
+        Returns:
+            flask.wrappers.Response: A standard Flask response
+        """
+
+        if isinstance(rv, Document):
+            return Response(
+                rv.to_json(),
+                headers={
+                    'Content-Type': 'application/hal+json'
+                })
+
+        return Response.force_type(rv, env)
