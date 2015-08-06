@@ -38,7 +38,7 @@ class Document(object):
         """
 
         self.data = data
-        self.embedded = embedded  # TODO: Embedded API TBC
+        # self.embedded = embedded  TODO: Embedded API TBC
 
         # No links provided, create an empty collection
         if links is None:
@@ -70,7 +70,7 @@ class Document(object):
         document.update(self.links.to_dict())
 
         # Add Embedded TODO: Embedded API TBC
-        document.update(self.embedded)
+        # document.update(self.embedded)
 
         return document
 
