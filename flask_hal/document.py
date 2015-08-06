@@ -16,7 +16,7 @@ Example:
 # Standard Libs
 import json
 
-# Third Party Libs
+# First Party Libs
 from flask_hal import link
 
 

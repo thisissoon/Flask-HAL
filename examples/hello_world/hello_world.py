@@ -8,6 +8,8 @@ A Simple Example Flask Application
 
 # Third Party Libs
 from flask import Flask
+
+# First Party Libs
 from flask_hal import HAL, document
 
 
