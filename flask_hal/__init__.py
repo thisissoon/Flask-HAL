@@ -13,6 +13,8 @@ Read more at the `Official Draft <https://tools.ietf.org/html/draft-kelly-json-h
 
 # Third Party Libs
 from flask import Response
+
+# First Party Libs
 from flask_hal.document import Document
 
 
@@ -79,7 +81,8 @@ class HALResponse(Response):
         >>> app.response_class = HALResponse
     """
 
-    def force_type(self, rv, env):
+    @staticmethod
+    def force_type(rv, env):
         """Called by ``flask.make_response`` when a view returns a none byte,
         string or unicode value. This method takes the views return value
         and converts into a standard `Response`.
@@ -90,10 +93,6 @@ class HALResponse(Response):
 
         Returns:
             flask.wrappers.Response: A standard Flask response
-
-        Raises:
-            TypeError: If the return value of the view is not
-            a :class:`flask_hal.document.Document`
         """
 
         if isinstance(rv, Document):
@@ -103,4 +102,4 @@ class HALResponse(Response):
                     'Content-Type': 'application/hal+json'
                 })
 
-        raise TypeError('{0} is not a flask_hal.document.Document instance')
+        return Response.force_type(rv, env)
