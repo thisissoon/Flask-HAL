@@ -40,7 +40,7 @@ Here is an example Dave...
     {
         "_links": {
             "self": {
-                "href": "/foo"
+                "href": "/hello"
             },
         },
         "foo": "bar"
