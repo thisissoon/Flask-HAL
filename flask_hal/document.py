@@ -48,3 +48,25 @@ class Document(object):
         links.append(link.Self())
 
         self.links = links
+
+    def to_dict(self):
+        """Converts the ``Document`` instance into an appropriate data
+        strucutre for HAL formatted documents.
+
+        Returns:
+            dict: The ``HAL`` document data structure
+        """
+
+        document = {}
+
+        # Add Data to the Document
+        if isinstance(self.data, dict):
+            document.update(self.data)
+
+        # Add Links
+        document.update(self.links.to_dict())
+
+        # Add Embeded TODO: Embedded API TBC
+        document.update(self.embedded)
+
+        return document
