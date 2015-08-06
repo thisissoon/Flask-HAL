@@ -61,7 +61,11 @@ class HAL(object):
             response_class (class): Optional custom ``response_class``
         """
 
-        pass
+        # Set the response class
+        if response_class is None:
+            app.response_class = HALResponse
+        else:
+            app.response_class = response_class
 
 
 class HALResponse(Response):
