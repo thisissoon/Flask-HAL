@@ -12,10 +12,10 @@ RUN apt-get update -y && apt-get install --no-install-recommends -y -q \
     && apt-get autoremove -y \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-WORKDIR /app/
+WORKDIR /src/
+ADD . /src/
 
-ADD ./src /app/
-
-RUN pip install tox
+RUN pip install pytest pytest-cov pytest-pep8 pytest-flakes
+RUN pip install -e .[develop]
 
 CMD ["python"]

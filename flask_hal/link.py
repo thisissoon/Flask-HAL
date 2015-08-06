@@ -101,7 +101,12 @@ class Collection(list):
             ...     Link('foo', 'http://foo.com'),
             ...     Link('bar', 'http://bar.com'))
             >>> l.to_json()
-            ... '{"_links": {"foo": {"href": "http://foo.com"}, "bar": {"href": "http://bar.com"}}}'
+            ... '{"_links":
+                    {
+                        "foo": {"href": "http://foo.com"},
+                        "bar": {"href": "http://bar.com"}
+                    }
+                }'
 
         Returns:
             str: The ``JSON`` representation of the instance
