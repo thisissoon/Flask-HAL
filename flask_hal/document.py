@@ -29,6 +29,9 @@ class Document(object):
             data (dict): Data for the document
             links (flask_hal.link.Collection): A collection of ``HAL`` links
             embedded: TBC
+
+        Raises:
+            TypeError: If ``links`` is not a :class:`flask_hal.link.Collection`
         """
 
         self.data = data
@@ -37,6 +40,9 @@ class Document(object):
         # No links proviced, create an empty collection
         if links is None:
             links = link.Collection()
+        else:
+            if not isinstance(links, link.Collection):
+                raise TypeError('links must be a flask_hal.link.Collection instance')
 
         # Always add the self link
         links.append(link.Self())
