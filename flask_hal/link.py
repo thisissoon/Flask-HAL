@@ -11,6 +11,9 @@ Implements the ``HAL`` Link specification.
 # Standard Libs
 import json
 
+# Third Party Libs
+from flask import request
+
 
 VALID_LINK_ATTRS = [
     'name',
@@ -186,3 +189,19 @@ class Link(object):
         """
 
         return json.dumps(self.to_dict())
+
+
+class Self(Link):
+    """A class to create the required ``self`` link  from the current
+    request URL.
+    """
+
+    def __init__(self, **kwargs):
+        """Initialises a new ``Self`` link instance. Accepts the same
+        Keyword Arguments as :class:`.Link`.
+
+        See Also:
+            :class:`.Link`
+        """
+
+        return super(Self, self).__init__('self', request.url, **kwargs)
