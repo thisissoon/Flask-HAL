@@ -18,11 +18,11 @@ HAL(app)  # Initialise HAL
 
 
 @app.route('/hello')
-def foo():
+def hello():
     return document.Document(data={
         'message': 'Hello World'
     })
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
