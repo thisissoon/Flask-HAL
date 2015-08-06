@@ -1,0 +1,13 @@
+machine:
+  services:
+    - docker
+  environment:
+    REPO: soon/Flask-HAL
+
+dependencies:
+  override:
+    - docker pull ikalnitsky/pythonista
+
+test:
+  override:
+    - docker run -v $PWD:/src -w /src ikalnitsky/pythonista tox
