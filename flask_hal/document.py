@@ -51,7 +51,7 @@ class BaseDocument(object):
             if isinstance(value, (list, set, tuple)):
                 value = link.Collection(*value)
             else:
-                raise TypeError('links must be a {} or {} instance'.format(
+                raise TypeError('links must be a {0} or {1} instance'.format(
                                 link.Collection, list))
         self._links = value
 
@@ -62,7 +62,7 @@ class BaseDocument(object):
     @embedded.setter
     def embedded(self, value):
         if not isinstance(value, dict):
-            raise TypeError('embedded must be a {} instance'.format(dict))
+            raise TypeError('embedded must be a {0} instance'.format(dict))
         self._embedded = value
 
     def to_dict(self):
@@ -86,7 +86,9 @@ class BaseDocument(object):
         # Add Embedded: Embedded API TBC
         if self.embedded:
             document.update({
-                '_embedded': {n: v.to_dict() for n, v in self.embedded.items()}
+                '_embedded': dict(
+                    (n, v.to_dict()) for n, v in self.embedded.items()
+                )
             })
 
         return document
