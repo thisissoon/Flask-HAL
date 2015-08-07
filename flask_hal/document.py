@@ -51,6 +51,16 @@ class BaseDocument(object):
             raise TypeError('links must be a {} instance'.format(link.Collection))
         self._links = value
 
+    @property
+    def embedded(self):
+        return self._embedded
+
+    @embedded.setter
+    def embedded(self, value):
+        if not isinstance(value, dict):
+            raise TypeError('embedded must be a {} instance'.format(dict))
+        self._embedded = value
+
     def to_dict(self):
         """Converts the ``Document`` instance into an appropriate data
         structure for HAL formatted documents.
@@ -69,7 +79,7 @@ class BaseDocument(object):
         if self.links:
             document.update(self.links.to_dict())
 
-        # Add Embedded TODO: Embedded API TBC
+        # Add Embedded: Embedded API TBC
         if self.embedded:
             document.update({
                 '_embedded': {n: v.to_dict() for n, v in self.embedded.iteritems()}
@@ -109,5 +119,41 @@ class Document(BaseDocument):
 
 class Embedded(BaseDocument):
     """Constructs a ``HAL`` embedded.
+
+    Example:
+        >>> document = Document(
+        >>>     embedded={
+        >>>         'orders': Embedded(
+        >>>             embedded={'details': Embedded(
+        >>>                 data={'details': {}}
+        >>>             )},
+        >>>             links=link.Collection(
+        >>>                 link.Link('foo', 'www.foo.com'),
+        >>>                 link.Link('boo', 'www.boo.com')
+        >>>             ),
+        >>>             data={'total': 30},
+        >>>         )
+        >>>     },
+        >>>     data={'currentlyProcessing': 14}
+        >>> )
+        >>> document.to_json()
+        ... {
+                "_links": {
+                    "self": {"href": "http://localhost/entity/231"}
+                },
+                "_embedded": {
+                    "orders": {
+                        "_embedded": {
+                            "details": {"details": {}}
+                        },
+                        "total": 30,
+                        "_links": {
+                            "foo": {"href": "www.foo.com"},
+                            "boo": {"href": "www.boo.com"}
+                        }
+                    }
+                },
+                "currentlyProcessing": 14
+            }
     """
     pass
