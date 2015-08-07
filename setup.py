@@ -54,8 +54,9 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Topic :: Software Development',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content'
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'License :: Public Domain'
     ],
-    license='MIT',
+    license='Public Domain',
     keywords=['Flask', 'HAL', 'REST', 'Views']
 )
