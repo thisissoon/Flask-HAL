@@ -31,6 +31,8 @@ Here is an example Dave...
     if __name__ == "__main__":
         app.run(debug=True)
 
+Here is the resppnse from the above view.
+
 .. sourcecode:: http
 
     HTTP/1.1 200 OK
