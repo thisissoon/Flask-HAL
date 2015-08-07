@@ -12,6 +12,9 @@ specification for your ``REST`` Flask Applications.
 # Third Party Libs
 from setuptools import setup
 
+# First Party Libs
+from flask_hal import __version__
+
 
 # Generate a Long Decription for the PyPi page which is the README.rst
 # Plus the CHANGELOG.rst
@@ -23,7 +26,7 @@ long_description += '\n' + changelog
 setup(
     name='Flask-HAL',
     url='https://github.com/thisissoon/Flask-HAL',
-    version='0.0.1',
+    version=__version__,
     author='SOON_',
     author_email='dorks@thisissoon.com',
     description='Provides easy integration of the HAL specification for '

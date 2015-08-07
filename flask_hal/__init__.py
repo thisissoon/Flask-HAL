@@ -18,6 +18,10 @@ from flask import Response
 from flask_hal.document import Document
 
 
+# Version
+__version__ = '0.0.1'
+
+
 class HAL(object):
     """Enables Flask-HAL integration into Flask Applications, either by the
     Application Factory Pattern or directly into an already created Flask
