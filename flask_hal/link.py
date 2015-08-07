@@ -192,7 +192,6 @@ class Link(object):
         Returns:
             str: The ``JSON`` encoded object
         """
-
         return json.dumps(self.to_dict())
 
 

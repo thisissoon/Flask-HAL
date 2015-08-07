@@ -20,13 +20,13 @@ import json
 from flask_hal import link
 
 
-class Document(object):
+class BaseDocument(object):
     """Constructs a ``HAL`` document.
     """
 
     def __init__(self, data=None, links=None, embedded=None):
-        """Initialises a new ``HAL`` Document instance. If no arguments are
-        provided a minimal viable ``HAL`` Document is created.
+        """Base ``HAL`` Document. If no arguments are provided a minimal viable
+        ``HAL`` Document is created.
 
         Keyword Args:
             data (dict): Data for the document
@@ -38,19 +38,18 @@ class Document(object):
         """
 
         self.data = data
-        # self.embedded = embedded  TODO: Embedded API TBC
+        self.embedded = embedded or {}
+        self.links = links or link.Collection()
 
-        # No links provided, create an empty collection
-        if links is None:
-            links = link.Collection()
-        else:
-            if not isinstance(links, link.Collection):
-                raise TypeError('links must be a flask_hal.link.Collection instance')
+    @property
+    def links(self):
+        return self._links
 
-        # Always add the self link
-        links.append(link.Self())
-
-        self.links = links
+    @links.setter
+    def links(self, value):
+        if not isinstance(value, link.Collection):
+            raise TypeError('links must be a {} instance'.format(link.Collection))
+        self._links = value
 
     def to_dict(self):
         """Converts the ``Document`` instance into an appropriate data
@@ -67,10 +66,14 @@ class Document(object):
             document.update(self.data)
 
         # Add Links
-        document.update(self.links.to_dict())
+        if self.links:
+            document.update(self.links.to_dict())
 
         # Add Embedded TODO: Embedded API TBC
-        # document.update(self.embedded)
+        if self.embedded:
+            document.update({
+                '_embedded': {n: v.to_dict() for n, v in self.embedded.iteritems()}
+            })
 
         return document
 
@@ -82,3 +85,29 @@ class Document(object):
         """
 
         return json.dumps(self.to_dict())
+
+
+class Document(BaseDocument):
+    """Constructs a ``HAL`` document.
+    """
+
+    def __init__(self, data=None, links=None, embedded=None):
+        """Initialises a new ``HAL`` Document instance. If no arguments are
+        provided a minimal viable ``HAL`` Document is created.
+
+        Keyword Args:
+            data (dict): Data for the document
+            links (flask_hal.link.Collection): A collection of ``HAL`` links
+            embedded: TBC
+
+        Raises:
+            TypeError: If ``links`` is not a :class:`flask_hal.link.Collection`
+        """
+        super(Document, self).__init__(data, links, embedded)
+        self.links.append(link.Self())
+
+
+class Embedded(BaseDocument):
+    """Constructs a ``HAL`` embedded.
+    """
+    pass
