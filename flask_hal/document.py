@@ -20,13 +20,13 @@ import json
 from flask_hal import link
 
 
-class Document(object):
+class BaseDocument(object):
     """Constructs a ``HAL`` document.
     """
 
     def __init__(self, data=None, links=None, embedded=None):
-        """Initialises a new ``HAL`` Document instance. If no arguments are
-        provided a minimal viable ``HAL`` Document is created.
+        """Base ``HAL`` Document. If no arguments are provided a minimal viable
+        ``HAL`` Document is created.
 
         Keyword Args:
             data (dict): Data for the document
@@ -38,19 +38,28 @@ class Document(object):
         """
 
         self.data = data
-        # self.embedded = embedded  TODO: Embedded API TBC
+        self.embedded = embedded or {}
+        self.links = links or link.Collection()
 
-        # No links provided, create an empty collection
-        if links is None:
-            links = link.Collection()
-        else:
-            if not isinstance(links, link.Collection):
-                raise TypeError('links must be a flask_hal.link.Collection instance')
+    @property
+    def links(self):
+        return self._links
 
-        # Always add the self link
-        links.append(link.Self())
+    @links.setter
+    def links(self, value):
+        if not isinstance(value, link.Collection):
+            raise TypeError('links must be a {} instance'.format(link.Collection))
+        self._links = value
 
-        self.links = links
+    @property
+    def embedded(self):
+        return self._embedded
+
+    @embedded.setter
+    def embedded(self, value):
+        if not isinstance(value, dict):
+            raise TypeError('embedded must be a {} instance'.format(dict))
+        self._embedded = value
 
     def to_dict(self):
         """Converts the ``Document`` instance into an appropriate data
@@ -67,10 +76,14 @@ class Document(object):
             document.update(self.data)
 
         # Add Links
-        document.update(self.links.to_dict())
+        if self.links:
+            document.update(self.links.to_dict())
 
-        # Add Embedded TODO: Embedded API TBC
-        # document.update(self.embedded)
+        # Add Embedded: Embedded API TBC
+        if self.embedded:
+            document.update({
+                '_embedded': {n: v.to_dict() for n, v in self.embedded.iteritems()}
+            })
 
         return document
 
@@ -82,3 +95,65 @@ class Document(object):
         """
 
         return json.dumps(self.to_dict())
+
+
+class Document(BaseDocument):
+    """Constructs a ``HAL`` document.
+    """
+
+    def __init__(self, data=None, links=None, embedded=None):
+        """Initialises a new ``HAL`` Document instance. If no arguments are
+        provided a minimal viable ``HAL`` Document is created.
+
+        Keyword Args:
+            data (dict): Data for the document
+            links (flask_hal.link.Collection): A collection of ``HAL`` links
+            embedded: TBC
+
+        Raises:
+            TypeError: If ``links`` is not a :class:`flask_hal.link.Collection`
+        """
+        super(Document, self).__init__(data, links, embedded)
+        self.links.append(link.Self())
+
+
+class Embedded(BaseDocument):
+    """Constructs a ``HAL`` embedded.
+
+    Example:
+        >>> document = Document(
+        >>>     embedded={
+        >>>         'orders': Embedded(
+        >>>             embedded={'details': Embedded(
+        >>>                 data={'details': {}}
+        >>>             )},
+        >>>             links=link.Collection(
+        >>>                 link.Link('foo', 'www.foo.com'),
+        >>>                 link.Link('boo', 'www.boo.com')
+        >>>             ),
+        >>>             data={'total': 30},
+        >>>         )
+        >>>     },
+        >>>     data={'currentlyProcessing': 14}
+        >>> )
+        >>> document.to_json()
+        ... {
+                "_links": {
+                    "self": {"href": "http://localhost/entity/231"}
+                },
+                "_embedded": {
+                    "orders": {
+                        "_embedded": {
+                            "details": {"details": {}}
+                        },
+                        "total": 30,
+                        "_links": {
+                            "foo": {"href": "www.foo.com"},
+                            "boo": {"href": "www.boo.com"}
+                        }
+                    }
+                },
+                "currentlyProcessing": 14
+            }
+    """
+    pass
