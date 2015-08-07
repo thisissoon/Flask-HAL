@@ -12,10 +12,59 @@ Unittests for the :module:`flask_hal.link` module.
 import json
 
 # Third Party Libs
+import pytest
 from flask import Flask
 
 # First Party Libs
-from flask_hal.link import Link, Self
+from flask_hal.link import Collection, Link, Self
+
+
+class TestCollection(object):
+
+    def test_init_raises_type_error(self):
+        with pytest.raises(TypeError) as excinfo:
+            Collection(
+                Link('foo', '/foo'),
+                'Foo',
+                Link('bar', '/bar'))
+
+        assert 'Foo is not a valid flask_hal.link.Link instance' in str(excinfo.value)
+
+    def test_to_dict(self):
+        c = Collection(
+            Link('foo', '/foo'),
+            Link('bar', '/bar'))
+
+        expected = {
+            '_links': {
+                'foo': {
+                    'href': '/foo'
+                },
+                'bar': {
+                    'href': '/bar'
+                }
+            }
+        }
+
+        assert c.to_dict() == expected
+
+    def test_to_json(self):
+        c = Collection(
+            Link('foo', '/foo'),
+            Link('bar', '/bar'))
+
+        expected = json.dumps({
+            '_links': {
+                'foo': {
+                    'href': '/foo'
+                },
+                'bar': {
+                    'href': '/bar'
+                }
+            }
+        })
+
+        assert c.to_json() == expected
 
 
 class TestLink(object):
