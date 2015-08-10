@@ -1,0 +1,20 @@
+machine:
+  services:
+    - docker
+  environment:
+    REPO: soon/Flask-HAL
+
+dependencies:
+  override:
+    - docker pull ikalnitsky/pythonista
+
+test:
+  override:
+    - docker run -v $PWD:/src -w /src ikalnitsky/pythonista tox
+
+deployment:
+  pypi:
+    branch: master
+    commands:
+      - sed -e "s/<PYPI_USER>/$PYPI_USER/" -e "s/<PYPI_PASS>/$PYPI_PASS/"< .pypirc.template > ~/.pypirc
+      - python setup.py sdist upload -r pypi

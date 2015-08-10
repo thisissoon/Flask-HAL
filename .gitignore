@@ -55,3 +55,8 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Mr Developer
+.tmuxp.yaml
+.env
+fugu.yml
