@@ -17,4 +17,4 @@ deployment:
     branch: master
     commands:
       - sed -e "s/<PYPI_USER>/$PYPI_USER/" -e "s/<PYPI_PASS>/$PYPI_PASS/"< .pypirc.template > ~/.pypirc
-      - python setup.py sdist upload -r pypi
+      - sudo python setup.py sdist upload -r pypi
