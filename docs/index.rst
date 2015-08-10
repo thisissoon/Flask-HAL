@@ -14,6 +14,9 @@ Reference
 
    api
 
+.. include:: ../CHANGELOG.rst
+.. include:: ../CONTRIBUTORS.rst
+
 Indices and tables
 ==================
 
