@@ -1,7 +1,7 @@
 Flask-HAL
 =========
 
-|circle| |downloads| |version| |license|
+|circle| |downloads| |version| |license| |docs|
 
 Hello Dave...
 
@@ -61,3 +61,6 @@ Here is the resppnse from the above view.
 
 .. |license| image:: http://img.shields.io/pypi/l/Flask-HAL.svg
     :target: https://pypi.python.org/pypi/Flask-HAL
+
+.. |docs| image:: https://img.shields.io/badge/documentation-latest-blue.svg
+    :target: http://flask-hal.soon.build/en/latest/
