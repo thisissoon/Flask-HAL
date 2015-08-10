@@ -21,7 +21,7 @@ import flask_hal  # noqa
 # Project details
 project = u'Flask-HAL'
 copyright = u'{0}, SOON_ London Ltd'.format(datetime.datetime.utcnow().year)
-version = '2015.10.8'
+version = open('./../VERSION.txt').read().strip()
 release = version
 
 # Sphinx Config
