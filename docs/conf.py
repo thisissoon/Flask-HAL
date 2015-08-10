@@ -5,7 +5,6 @@ import datetime
 import os
 import sys
 
-
 # Add flask_hal to the Path
 root = os.path.abspath(
     os.path.join(
@@ -22,7 +21,7 @@ import flask_hal  # noqa
 # Project details
 project = u'Flask-HAL'
 copyright = u'{0}, SOON_ London Ltd'.format(datetime.datetime.utcnow().year)
-version = '0.0.0'
+version = '2015.10.8'
 release = version
 
 # Sphinx Config
