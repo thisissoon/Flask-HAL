@@ -162,4 +162,15 @@ class Embedded(BaseDocument):
                 "currentlyProcessing": 14
             }
     """
-    pass
+
+    def to_dict(self):
+        """Converts the ``Document`` instance into an appropriate data
+        structure for HAL formatted documents.
+
+        Returns:
+            dict: The ``HAL`` document data structure
+        """
+        if isinstance(self.data, (list, tuple, set)):
+            return self.data
+
+        return super(Embedded, self).to_dict()
