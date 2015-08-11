@@ -83,3 +83,44 @@ def test_should_raise_exception_when_embedded_is_not_dict():
     with app.test_request_context('/entity/231'):
         with pytest.raises(TypeError):
             Document(embedded=['details'])
+
+
+def test_data_in_embedded_can_be_array():
+    app = flask.Flask(__name__)
+    with app.test_request_context('/entity/231'):
+        document = Document(
+            embedded={
+                'order': Embedded(
+                    data=[
+                        {
+                            'total': 30.00,
+                            'currency': 'USD',
+                            'status': 'shipped'
+                        }, {
+                            'total': 20.00,
+                            'currency': 'USD',
+                            'status': 'processing'
+                        }
+                    ]
+                )
+            },
+            data={
+                'currentlyProcessing': 14
+            }
+        )
+        expected = {
+            'currentlyProcessing': 14,
+            '_links': {'self': {'href': u'http://localhost/entity/231'}},
+            '_embedded': {
+                'order': [{
+                    'total': 30.00,
+                    'currency': 'USD',
+                    'status': 'shipped'
+                }, {
+                    'total': 20.00,
+                    'currency': 'USD',
+                    'status': 'processing'
+                }]
+            }
+        }
+        assert expected == document.to_dict()
