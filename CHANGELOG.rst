@@ -1,12 +1,12 @@
 Change Log
 ----------
 
-Pending
-~~~~~~~~~
+1.0.1
+~~~~~
 - ``self`` links now take into account ``SERVER_NAME`` configuration
 
 1.0.0
-~~~~~~~~~
+~~~~~
 - A list can be used in data for Embedded object
 
 2015.10.8
