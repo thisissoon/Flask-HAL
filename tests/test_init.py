@@ -44,7 +44,7 @@ class TestHalResponse(object):
         expected = json.dumps({
             '_links': {
                 'self': {
-                    'href': 'http://localhost/'
+                    'href': '/'
                 }
             }
         })
