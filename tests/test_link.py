@@ -118,7 +118,7 @@ class TestSelf(object):
 
             expected = {
                 'self': {
-                    'href': 'http://localhost/',
+                    'href': '/',
                     'name': 'foo',
                 }
             }
@@ -131,9 +131,23 @@ class TestSelf(object):
 
             expected = json.dumps({
                 'self': {
-                    'href': 'http://localhost/',
+                    'href': '/',
                     'name': 'foo',
                 }
             })
 
             assert l.to_json() == expected
+
+    def test_with_server_name(self):
+        self.app.config['SERVER_NAME'] = 'foo.com'
+        with self.app.test_request_context():
+            l = Self(foo='foo', name='foo')
+
+            expected = {
+                'self': {
+                    'href': 'http://foo.com/',
+                    'name': 'foo',
+                }
+            }
+
+            assert l.to_dict() == expected
