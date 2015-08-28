@@ -3,15 +3,15 @@ import flask
 import pytest
 
 # First Party Libs
-from flask_hal.document import Document, Embedded
 from flask_hal import link
+from flask_hal.document import Document, Embedded
 
 
 def test_document_should_have_link_self():
     app = flask.Flask(__name__)
     with app.test_request_context('/entity/231'):
         document = Document()
-        assert flask.request.url == document.links[0].href
+        assert flask.request.path == document.links[0].href
 
 
 def test_should_raise_exception_when_links_are_not_in_collection():
@@ -42,7 +42,7 @@ def test_should_append_embedded_document():
         expected = {
             '_links': {
                 'self': {
-                    'href': flask.request.url
+                    'href': flask.request.path
                 }
             },
             '_embedded': {
@@ -74,7 +74,7 @@ def test_empty_document_to_json():
     app = flask.Flask(__name__)
     with app.test_request_context('/foo/23'):
         document = Document()
-        expected = '{"_links": {"self": {"href": "http://localhost/foo/23"}}}'
+        expected = '{"_links": {"self": {"href": "/foo/23"}}}'
         assert expected == document.to_json()
 
 
@@ -110,7 +110,7 @@ def test_data_in_embedded_can_be_array():
         )
         expected = {
             'currentlyProcessing': 14,
-            '_links': {'self': {'href': u'http://localhost/entity/231'}},
+            '_links': {'self': {'href': u'/entity/231'}},
             '_embedded': {
                 'order': [{
                     'total': 30.00,

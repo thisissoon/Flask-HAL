@@ -12,7 +12,7 @@ Implements the ``HAL`` Link specification.
 import json
 
 # Third Party Libs
-from flask import request
+from flask import current_app, request
 
 
 VALID_LINK_ATTRS = [
@@ -208,4 +208,8 @@ class Self(Link):
             :class:`.Link`
         """
 
-        return super(Self, self).__init__('self', request.url, **kwargs)
+        url = request.url
+        if current_app.config['SERVER_NAME'] is None:
+            url = request.url.replace(request.host_url, '/')
+
+        return super(Self, self).__init__('self', url, **kwargs)

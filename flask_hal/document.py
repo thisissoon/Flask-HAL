@@ -145,7 +145,7 @@ class Embedded(BaseDocument):
         >>> document.to_json()
         ... {
                 "_links": {
-                    "self": {"href": "http://localhost/entity/231"}
+                    "self": {"href": "/entity/231"}
                 },
                 "_embedded": {
                     "orders": {
