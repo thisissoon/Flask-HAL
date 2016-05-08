@@ -1,6 +1,10 @@
 Change Log
 ----------
 
+1.0.2
+~~~~~
+- Multiple links with the same relation will be put into an array
+
 1.0.1
 ~~~~~
 - ``self`` links now take into account ``SERVER_NAME`` configuration
