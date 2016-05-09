@@ -48,6 +48,26 @@ class TestCollection(object):
 
         assert c.to_dict() == expected
 
+    def test_to_dict_repeat_relation(self):
+        c = Collection(
+            Link('foo', '/foo'),
+            Link('foo', '/bar'))
+
+        expected = {
+            '_links': {
+                'foo': [
+                    {
+                        'href': '/foo'
+                    },
+                    {
+                        'href': '/bar'
+                    }
+                ]
+            }
+        }
+
+        assert c.to_dict() == expected
+
     def test_to_json(self):
         c = Collection(
             Link('foo', '/foo'),
@@ -61,6 +81,26 @@ class TestCollection(object):
                 'bar': {
                     'href': '/bar'
                 }
+            }
+        })
+
+        assert c.to_json() == expected
+
+    def test_to_json_repeat_relation(self):
+        c = Collection(
+            Link('foo', '/foo'),
+            Link('foo', '/bar'))
+
+        expected = json.dumps({
+            '_links': {
+                'foo': [
+                    {
+                        'href': '/foo'
+                    },
+                    {
+                        'href': '/bar'
+                    }
+                ]
             }
         })
 
