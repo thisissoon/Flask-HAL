@@ -38,6 +38,15 @@ setup(
     install_requires=[
         'flask',
     ],
+    tests_require=[
+        'pytest',
+        'pytest_cov',
+        'pytest_pep8',
+        'pytest-flakes',
+    ],
+    setup_requires=[
+        'pytest-runner',
+    ],
     classifiers=[
         'Framework :: Flask',
         'Environment :: Web Environment',
