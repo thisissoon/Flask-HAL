@@ -50,6 +50,10 @@ Here is the response from the above view.
         "foo": "bar"
     }
 
+## Contributing
+
+Run tests using `python setup.py test`.
+
 .. |circle| image:: https://img.shields.io/circleci/project/thisissoon/Flask-HAL.svg
     :target: https://circleci.com/gh/thisissoon/Flask-HAL
 
