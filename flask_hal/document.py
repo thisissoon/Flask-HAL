@@ -171,6 +171,13 @@ class Embedded(BaseDocument):
             dict: The ``HAL`` document data structure
         """
         if isinstance(self.data, (list, tuple, set)):
-            return self.data
+            data = []
+
+            for item in self.data:
+                if isinstance(item, BaseDocument):
+                    data.append(item.to_dict())
+                else:
+                    data.append(item)
+            return data
 
         return super(Embedded, self).to_dict()
