@@ -1,6 +1,11 @@
 Change Log
 ----------
 
+1.0.3
+~~~~~
+- Correctly deserialise embedded documents: #25
+- Support python setup.py test syntax: #24
+
 1.0.2
 ~~~~~
 - Multiple links with the same relation will be put into an array

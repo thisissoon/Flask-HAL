@@ -5,6 +5,7 @@ Contributors
 * Radek Los: `@radeklos <http://github.com/radeklos>`_
 * Greg Reed: `@peeklondon <http://github.com/peeklondon>`_
 * Brian Peters: `@brianfpeters <http://github.com/brianfpeters>`_
+* Craig Blaszczyk: `@jakul <https://github.com/jakul>`_
 
 Special Thanks
 --------------
