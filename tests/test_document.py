@@ -124,3 +124,68 @@ def test_data_in_embedded_can_be_array():
             }
         }
         assert expected == document.to_dict()
+
+
+def test_data_in_embedded_can_be_array_of_documents():
+    app = flask.Flask(__name__)
+    with app.test_request_context('/entity/231'):
+        document = Document(
+            embedded={
+                'order': Embedded(
+                    data=[
+                        Embedded(
+                            data={
+                                'total': 30.00,
+                                'currency': 'USD',
+                                'status': 'shipped'
+                            },
+                            links=link.Collection(
+                                link.Link('foo', 'www.foo30.com'),
+                                link.Link('boo', 'www.boo30.com')
+                            ),
+                        ),
+                        Embedded(
+                            data={
+                                'total': 20.00,
+                                'currency': 'USD',
+                                'status': 'processing'
+                            },
+                            links=link.Collection(
+                                link.Link('foo', 'www.foo20.com'),
+                                link.Link('boo', 'www.boo20.com')
+                            ),
+                        )
+                    ]
+                )
+            },
+            data={
+                'currentlyProcessing': 14
+            }
+        )
+        expected = {
+            'currentlyProcessing': 14,
+            '_links': {'self': {'href': u'/entity/231'}},
+            '_embedded': {
+                'order': [
+                    {
+                        '_links': {
+                            'foo': {'href': 'www.foo30.com'},
+                            'boo': {'href': 'www.boo30.com'}
+                        },
+                        'total': 30.00,
+                        'currency': 'USD',
+                        'status': 'shipped'
+                    },
+                    {
+                        '_links': {
+                            'foo': {'href': 'www.foo20.com'},
+                            'boo': {'href': 'www.boo20.com'}
+                        },
+                        'total': 20.00,
+                        'currency': 'USD',
+                        'status': 'processing'
+                    }
+                ]
+            }
+        }
+        assert expected == document.to_dict()
