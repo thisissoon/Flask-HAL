@@ -191,3 +191,15 @@ class TestSelf(object):
             }
 
             assert l.to_dict() == expected
+
+    def test_external(self):
+        with self.app.test_request_context():
+            l = Self(external=True)
+
+            expected = {
+                'self': {
+                    'href': 'http://localhost/'
+                }
+            }
+
+            assert l.to_dict() == expected
