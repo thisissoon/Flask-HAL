@@ -10,7 +10,7 @@ dependencies:
 
 test:
   override:
-    - docker run -v $PWD:/src -w /src ikalnitsky/pythonista tox
+    - docker run -v $PWD:/src -w /src ikalnitsky/pythonista sh circle.sh
 
 deployment:
   pypi:
