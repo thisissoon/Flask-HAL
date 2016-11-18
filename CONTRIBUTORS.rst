@@ -6,6 +6,7 @@ Contributors
 * Greg Reed: `@peeklondon <http://github.com/peeklondon>`_
 * Brian Peters: `@brianfpeters <http://github.com/brianfpeters>`_
 * Craig Blaszczyk: `@jakul <https://github.com/jakul>`_
+* Jason Jones: `@jcjones1515 <https://github.com/jcjones1515>`_
 
 Special Thanks
 --------------

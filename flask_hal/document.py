@@ -107,7 +107,7 @@ class Document(BaseDocument):
     """Constructs a ``HAL`` document.
     """
 
-    def __init__(self, data=None, links=None, embedded=None):
+    def __init__(self, data=None, links=None, embedded=None, external_self=False):
         """Initialises a new ``HAL`` Document instance. If no arguments are
         provided a minimal viable ``HAL`` Document is created.
 
@@ -115,12 +115,13 @@ class Document(BaseDocument):
             data (dict): Data for the document
             links (flask_hal.link.Collection): A collection of ``HAL`` links
             embedded: TBC
+            external_self: use a fully-qualified link for self
 
         Raises:
             TypeError: If ``links`` is not a :class:`flask_hal.link.Collection`
         """
         super(Document, self).__init__(data, links, embedded)
-        self.links.append(link.Self())
+        self.links.append(link.Self(external=external_self))
 
 
 class Embedded(BaseDocument):

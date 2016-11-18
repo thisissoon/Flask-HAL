@@ -14,6 +14,13 @@ def test_document_should_have_link_self():
         assert flask.request.path == document.links[0].href
 
 
+def test_document_external_self():
+    app = flask.Flask(__name__)
+    with app.test_request_context('/entity/231'):
+        document = Document(external_self=True)
+        assert flask.request.url == document.links[0].href
+
+
 def test_should_raise_exception_when_links_are_not_in_collection():
     app = flask.Flask(__name__)
     with app.test_request_context('/entity/231'):

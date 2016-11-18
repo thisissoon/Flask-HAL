@@ -209,12 +209,16 @@ class Self(Link):
         """Initialises a new ``Self`` link instance. Accepts the same
         Keyword Arguments as :class:`.Link`.
 
+        Additional Keyword Args:
+            external (bool): if true, force link to be fully-qualified URL, defaults to False
+
         See Also:
             :class:`.Link`
         """
 
         url = request.url
-        if current_app.config['SERVER_NAME'] is None:
+        external = kwargs.get('external', False)
+        if not external and current_app.config['SERVER_NAME'] is None:
             url = request.url.replace(request.host_url, '/')
 
         return super(Self, self).__init__('self', url, **kwargs)
